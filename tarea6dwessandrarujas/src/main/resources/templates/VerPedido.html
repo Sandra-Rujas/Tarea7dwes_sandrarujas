@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ver Pedidos</title>
+<link rel="stylesheet" href="../CSS/VerPedido.css">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img th:src="@{../Images/logosinfondo.png}" alt="Logo">
+		</div>
+		<h1>Carrito</h1>
+		<a th:href="@{/ViveroCliente}">
+			<button class="logout-btn">Volver atrás</button>
+		</a>
+	</header>
+
+	<main>
+		<div th:if="${#lists.isEmpty(carrito)}">
+			<p>No tienes productos en tu carrito.</p>
+		</div>
+
+		<div th:if="${!#lists.isEmpty(carrito)}">
+			<div class="cart-container">
+				<h2>Lista de Pedidos</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Código Planta</th>
+							<th>Cantidad</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="pedido : ${carrito}">
+							<td th:text="${pedido.planta.codigo}"></td>
+							<td th:text="${pedido.cantidad}"></td>
+						
+						</tr>
+					</tbody>
+				</table>
+
+				<form th:action="@{/VerPedido}" method="POST">
+					<button type="submit" class="logout-btn">Confirmar Compra</button>
+				</form>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

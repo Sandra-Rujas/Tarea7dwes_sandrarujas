@@ -1,0 +1,129 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fondo del body similar al resto */
+body {
+  font-family: Arial, sans-serif;
+  background: url('../Images/slider03.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: black;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: black;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+}
+
+header .logo img {
+  height: 60px;
+  margin-right: 10px;
+}
+
+header h1 {
+  flex-grow: 1;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* Botones */
+.logout-btn {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  border-color: white;
+  text-align: center; /* Alineación de texto en el centro */
+}
+
+.logout-btn:hover {
+  background-color: #d3a51a;
+}
+
+/* Contenido Principal */
+main {
+  margin-top: 100px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Contenedor del carrito */
+.cart-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Títulos */
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid white;
+  padding: 10px;
+  text-align: center;
+  background-color: white;
+}
+
+th {
+  background-color: black;
+  color: white;
+}
+
+/* Botón de eliminar en cada fila */
+.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+/* Alinear botones */
+form {
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 10px; /* Espaciado entre los botones */
+}
+
+/* Confirmar compra y cancelar pedido */
+.confirm-container {
+  margin-top: 20px;
+}
+
+/* Mensaje */
+.message-container {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d3a51a;
+}

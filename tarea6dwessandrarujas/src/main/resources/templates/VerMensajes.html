@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Mensajes</title>
+<link rel="stylesheet" th:href="@{../CSS/VerMensajes.css}">
+</head>
+<body>
+
+	<!-- Header -->
+	<header>
+		<div class="logo">
+			<img th:src="@{../Images/logosinfondo.png}" alt="Logo">
+		</div>
+		<h1>VER MENSAJES</h1>
+
+		<!-- Botón para volver atrás según el rol del usuario -->
+		<th:block th:if="${session.userRole == 'ADMIN'}">
+			<a th:href="@{/ViveroAdmin}">
+				<button class="logout-btn">Volver atrás</button>
+			</a>
+		</th:block>
+
+		<th:block th:if="${session.userRole == 'PERSONAL'}">
+			<a th:href="@{/ViveroPersonal}">
+				<button class="logout-btn">Volver atrás</button>
+			</a>
+		</th:block>
+
+		<th:block th:if="${session.userRole == null}">
+			<a th:href="@{/ViveroInvitado}">
+				<button class="logout-btn">Volver atrás</button>
+			</a>
+		</th:block>
+	</header>
+
+	<!-- Contenido principal. Menú de opciones. -->
+	<main class="container">
+		<h2>Seleccione una opción:</h2>
+		<form action="/VerMensajes" method="GET">
+			<select name="seccion" onchange="this.form.submit()">
+				<option value="">-- Seleccionar --</option>
+				<option value="verMensajes"
+					th:selected="${seccion == 'verMensajes'}">Ver todos los
+					mensajes</option>
+				<option value="mensajesPorPersona"
+					th:selected="${seccion == 'mensajesPorPersona'}">Ver
+					mensajes por persona</option>
+				<option value="mensajesPorFecha"
+					th:selected="${seccion == 'mensajesPorFecha'}">Ver
+					mensajes por fecha</option>
+				<option value="mensajesPorPlanta"
+					th:selected="${seccion == 'mensajesPorPlanta'}">Ver
+					mensajes por planta</option>
+			</select>
+		</form>
+
+		<!-- Sección 1: Ver todos los mensajes -->
+		<div th:if="${seccion == 'verMensajes'} and ${mensajes != null}">
+			<h3>Todos los mensajes</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Mensaje</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="mensaje : ${mensajes}">
+						<td th:text="${mensaje.id}"></td>
+						<td th:text="${mensaje.mensaje}"></td>
+						<td th:text="${mensaje.fechaHora}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Sección 2: Ver mensajes por persona -->
+		<div th:if="${seccion == 'mensajesPorPersona'}">
+			<h3>Selecciona una persona</h3>
+			<form action="/MensajesPorPersona" method="POST">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" /> <select name="idPersona" required>
+					<option value="">-- Seleccionar persona --</option>
+					<option th:each="persona : ${personas}" th:value="${persona.id}"
+						th:text="${persona.nombre}"></option>
+				</select>
+				<button type="submit">Buscar</button>
+			</form>
+
+			<div th:if="${mensajesPorPersona}">
+				<h3>Mensajes de la Persona Seleccionada</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Mensaje</th>
+							<th>Fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="mensaje : ${mensajesPorPersona}">
+							<td th:text="${mensaje.id}"></td>
+							<td th:text="${mensaje.mensaje}"></td>
+							<td th:text="${mensaje.fechaHora}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- Sección 3: Ver mensajes por fecha -->
+		<div th:if="${seccion == 'mensajesPorFecha'}">
+			<h3>Selecciona un rango de fechas</h3>
+			<form action="/MensajesPorFecha" method="POST">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" /> <label>Desde:</label> <input
+					type="date" name="fechaInicio" required> <label>Hasta:</label>
+				<input type="date" name="fechaFin" required>
+				<button type="submit">Buscar</button>
+			</form>
+
+			<div th:if="${mensajesPorFecha}">
+				<h3>Mensajes en el Rango de Fechas</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Mensaje</th>
+							<th>Fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="mensaje : ${mensajesPorFecha}">
+							<td th:text="${mensaje.id}"></td>
+							<td th:text="${mensaje.mensaje}"></td>
+							<td th:text="${mensaje.fechaHora}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<!-- Sección 4: Ver mensajes por planta -->
+		<div th:if="${seccion == 'mensajesPorPlanta'}">
+			<h3>Selecciona una planta</h3>
+			<form action="/MensajesPorPlanta" method="POST">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" /> <select name="codigoPlanta" required size="3">
+					<option th:each="planta : ${plantas}" th:value="${planta.codigo}"
+						th:text="${planta.codigo}"></option>
+				</select>
+				<button type="submit">Buscar</button>
+			</form>
+
+			<div th:if="${mensajesPorPlanta}">
+				<h3>Mensajes de la Planta Seleccionada</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Mensaje</th>
+							<th>Fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="mensaje : ${mensajesPorPlanta}">
+							<td th:text="${mensaje.id}"></td>
+							<td th:text="${mensaje.mensaje}"></td>
+							<td th:text="${mensaje.fechaHora}"></td>
+						</tr>

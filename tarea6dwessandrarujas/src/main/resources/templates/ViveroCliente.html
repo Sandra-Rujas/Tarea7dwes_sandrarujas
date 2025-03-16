@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú de Pedidos</title>
+<link rel="stylesheet" th:href="@{../CSS/ViveroCliente.css}">
+</head>
+<body>
+	<!-- Header -->
+	<header>
+		<div class="logo">
+			<img th:src="@{../Images/logosinfondo.png}" alt="Logo">
+		</div>
+		<h1>MENÚ DE PEDIDOS</h1>
+		<a th:href="@{/logout}"><button class="logout-btn">Cerrar
+				Sesión</button></a>
+	</header>
+
+	<!-- Contenido principal -->
+	<main>
+		<div class="menu">
+			<!-- Realizar Pedido -->
+			<!-- Gestión Ejemplares -->
+			<div class="column">
+				<h2>Gestión Ejemplares</h2>
+				<button class="dropdown-btn">Ver opciones</button>
+				<div class="dropdown-content">
+					<button>
+						<a th:href="@{/ComprarEjemplar}">Comprar Ejemplar</a>
+					</button>
+				</div>
+			</div>
+
+			<!-- Carrito de Compras -->
+			<div class="column">
+				<h2>Carrito de Compras</h2>
+				<button class="dropdown-btn">Ver opciones</button>
+				<div class="dropdown-content">
+					<button>
+						<a th:href="@{/VerPedido}">Ver carrito</a>
+					</button>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

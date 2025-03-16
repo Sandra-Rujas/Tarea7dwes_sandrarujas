@@ -1,0 +1,255 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    background-image: url('../Images/slider02.jpg');
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center; 
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    height: 70px;
+    box-sizing: border-box;
+    flex-wrap: wrap;  /* Para permitir que los elementos se acomoden en pantallas pequeñas */
+}
+
+header .logo img {
+    width: 50px; 
+    height: auto;
+    margin-right: 15px;
+}
+
+header h1 {
+    flex-grow: 1;
+    font-size: 24px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.logout-btn {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    border-color: white;
+    margin-left: 10px;  /* Espacio entre el título y el botón */
+}
+
+.logout-btn:hover {
+    background-color: #d3a51a;
+}
+
+main {
+    margin-top: 100px;
+}
+
+.form-container {
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid black;
+}
+
+input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #4CAF50;
+}
+
+button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #d3a51a;
+}
+
+.table-container {
+    margin: 20px auto;
+    max-width: 90%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: black; 
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    background-color: #f9f9f9;
+    padding: 12px;
+    text-align: left;
+}
+
+td:hover {
+    background-color: #f1f1f1;
+}
+
+.message-container {
+    margin: 20px auto;
+    max-width: 600px;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo general para el contenedor del formulario */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Estilo para las etiquetas de los checkboxes */
+.checkbox-item label {
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+/* Estilo para el botón de enviar */
+.submit-btn {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    font-size: 1em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #d3a51a;
+}
+
+.submit-btn:active {
+    background-color: #d3a51a;
+}
+
+/* Media Query para pantallas más pequeñas */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 18px;
+    }
+    
+    .logout-btn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+    
+    .form-container {
+        margin: 15px;
+        padding: 15px;
+    }
+    
+    .checkbox-group {
+        margin-bottom: 15px;
+    }
+    
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 16px;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    
+    .logout-btn {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+}
