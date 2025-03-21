@@ -13,6 +13,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	
+	/*
+	 * Configura los filtros de seguridad para las solicitudes HTTP.
+	 * Define las reglas de autorización para diferentes rutas, incluyendo el acceso a las páginas públicas, 
+	 * los roles requeridos para ciertas rutas y el manejo de la autenticación y el cierre de sesión.
+	 * @param http El objeto HttpSecurity utilizado para configurar las reglas de seguridad HTTP.
+	 * @return El objeto SecurityFilterChain configurado para aplicar las reglas de seguridad.
+	 * @throws Exception Si ocurre algún error al configurar la seguridad HTTP.
+	 */
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
@@ -27,11 +37,29 @@ public class SecurityConfig {
 		return http.build();
 	}
 
+	
+	/*
+	 * Devuelve una instancia del servicio que maneja la carga de detalles de usuario.
+	 * Este servicio es utilizado por Spring Security para obtener la información del usuario 
+	 * durante el proceso de autenticación.
+	 * @return El servicio de detalles de usuario que implementa la lógica de carga de usuario.
+	 */
+	
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
 
+	
+	/*
+	 * Configura el gestor de autenticación para la seguridad HTTP.
+	 * Establece el servicio de detalles de usuario y el codificador de contraseñas para el proceso de autenticación.
+	 * @param http El objeto HttpSecurity utilizado para configurar la seguridad HTTP.
+	 * @param userDetailsService El servicio que proporciona los detalles del usuario.
+	 * @return El AuthenticationManager configurado para manejar la autenticación de los usuarios.
+	 * @throws Exception Si ocurre algún error al configurar el gestor de autenticación.
+	 */
+	
 	@Bean
 	public AuthenticationManager authManager(HttpSecurity http, UserDetailsService userDetailsService)
 			throws Exception {

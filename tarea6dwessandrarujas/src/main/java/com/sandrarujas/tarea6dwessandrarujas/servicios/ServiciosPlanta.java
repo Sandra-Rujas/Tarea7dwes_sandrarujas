@@ -21,8 +21,8 @@ public class ServiciosPlanta {
     /*
      * Método para insertar una nueva planta.
      * @param planta Objeto planta que queremos insertar
-     * 
      */
+    
     public void insertar(Planta planta) {
     	plantaRepository.saveAndFlush(planta);
     }
@@ -32,6 +32,7 @@ public class ServiciosPlanta {
      * Método para obtener todas las plantas en una colección.
      * @return Colección de todas las plantas
      */
+    
     @Transactional
     public List<Planta> verPlantas() {
     	return plantaRepository.findAllByOrderByNombreComunAsc();
@@ -43,6 +44,7 @@ public class ServiciosPlanta {
      * @param nComun Nuevo nombre común
      * @return true si se ha actualizado correctamente el nombre
      */
+    
     @Transactional
     public boolean actualizarNombreComun(String codigo, String nComun) { 
         Optional<Planta> plantas = plantaRepository.findByCodigo(codigo);
@@ -61,6 +63,7 @@ public class ServiciosPlanta {
      * @param nCientifico Nuevo nombre científico
      * @return true si se ha actualizado correctamente, false si no
      */
+    
     @Transactional
     public boolean actualizarNombreCientifico(String codigo, String nCientifico) {
         Optional<Planta> plantas = plantaRepository.findByCodigo(codigo);
@@ -78,6 +81,7 @@ public class ServiciosPlanta {
      * @param codigo Código de la planta
      * @return true si el código ya existe, false si no
      */
+    
     public boolean codigoExistente(String codigo) {
         return plantaRepository.existsByCodigo(codigo);
     }
@@ -87,6 +91,7 @@ public class ServiciosPlanta {
      * @param p Planta a validar
      * @return true si la planta es válida, false si no
      */
+    
     public boolean validarPlanta(Planta p) {
         if (p.getCodigo() == null || p.getCodigo().isEmpty()) {
             return false;
@@ -121,6 +126,7 @@ public class ServiciosPlanta {
      * @param codigo Código a validar
      * @return true si el código es válido, false si no
      */
+    
     public boolean validarCodigoPlanta(String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return false;
@@ -138,12 +144,19 @@ public class ServiciosPlanta {
      * @param codigo. El código de la planta que queremos buscar.
      * @return si está el código nos muestra la lista y si no null.
      */
+    
     public Planta buscarPorCodigo(String codigo) {
         Optional<Planta> plantas = plantaRepository.findByCodigo(codigo);
         return plantas.orElse(null);
     }
     
 
+    /*
+     * Busca una planta por su identificador único.
+     * @param id El identificador único de la planta a buscar.
+     * @return La planta encontrada si existe, o {@code null} si no se encuentra una planta con el identificador proporcionado.
+     */
+    
 	 public Planta buscarPorId(Long id) {
 	        Optional<Planta> planta = plantaRepository.findById(id);
 	        return planta.orElse(null); // Devuelve la planta o null si no se encuentra

@@ -25,10 +25,7 @@ public class Sesion {
 		this.usuario = usuario;
 	}
 	
-	/*
-     * Método para cerrar sesión del usuario conectado.
-     * 
-     */
+	/* Método para cerrar sesión del usuario conectado. */
 	public void cerrarSesion() {
 		this.setUsuario("");
 	}

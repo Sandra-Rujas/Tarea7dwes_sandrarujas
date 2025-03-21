@@ -29,9 +29,8 @@ public class ViveroInvitadoController {
 	@Autowired
 	Controlador controlador;
 
-	/**
+	/*
 	 * Muestra la página de bienvenida del vivero invitado.
-	 * 
 	 * @param nombre El nombre a mostrar, por defecto es "Mundo".
 	 * @param model  El objeto Model que se pasa a la vista.
 	 * @return El nombre de la vista a mostrar ("ViveroInvitado").
@@ -42,9 +41,8 @@ public class ViveroInvitadoController {
 		return "ViveroInvitado";
 	}
 
-	/**
+	/*
 	 * Muestra el formulario de login.
-	 * 
 	 * @param error El mensaje de error, si existe.
 	 * @param model El objeto Model que se pasa a la vista.
 	 * @return El nombre de la vista de login.
@@ -52,16 +50,14 @@ public class ViveroInvitadoController {
 
 	@GetMapping("/login")
 	public String loginForm(@RequestParam(name = "error", required = false) String error, Model model) {
-	    if (error != null) {
-	        model.addAttribute("errorMessage", "Credenciales incorrectas, por favor intente nuevamente.");
-	    }
-	    return "login";
+		if (error != null) {
+			model.addAttribute("errorMessage", "Credenciales incorrectas, por favor intente nuevamente.");
+		}
+		return "login";
 	}
 
-
-	/**
+	/*
 	 * Procesa el formulario de login y autentica al usuario.
-	 * 
 	 * @param usuario  El nombre de usuario ingresado.
 	 * @param password La contraseña ingresada.
 	 * @param model    El objeto Model para pasar datos a la vista.
@@ -83,7 +79,7 @@ public class ViveroInvitadoController {
 			if (credencial == null) {
 				System.out.println("Usuario no encontrado en la base de datos: " + usuario);
 				model.addAttribute("errorMessage", "El usuario no existe.");
-				return "login"; 
+				return "login";
 			}
 
 			System.out.println("Contraseña correcta, iniciando sesión...");
@@ -91,7 +87,6 @@ public class ViveroInvitadoController {
 			session.setAttribute("userId", credencial.getPersona().getId());
 			session.setAttribute("rol", credencial.getRol());
 
-			// Redirigir según el rol
 			if ("ADMIN".equalsIgnoreCase(credencial.getRol())) {
 				System.out.println("Redirigiendo al área ADMIN");
 				return "redirect:/ViveroAdmin";
@@ -104,25 +99,23 @@ public class ViveroInvitadoController {
 			} else {
 				System.out.println("Rol no reconocido: " + credencial.getRol());
 				model.addAttribute("errorMessage", "Rol no reconocido.");
-				return "login"; // Redirige al formulario con mensaje de error
+				return "login"; 
 			}
 		} catch (Exception e) {
 			System.out.println("Error al intentar iniciar sesión: " + e.getMessage());
 			model.addAttribute("errorMessage", "No se ha podido iniciar sesión: " + e.getMessage());
-			return "login"; // Redirige al formulario con mensaje de error
+			return "login"; 
 		}
 	}
 
-	/**
+	/*
 	 * Muestra todas las plantas disponibles en el vivero.
-	 * 
 	 * @param model El objeto Model que se pasa a la vista.
 	 * @return El nombre de la vista que muestra la lista de plantas.
 	 */
 
 	@GetMapping("/VerPlantas")
 	public String mostrarPlantas(Model model, HttpSession session) {
-		// Obtener el usuario autenticado desde Spring Security
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		String username = null;
@@ -159,9 +152,8 @@ public class ViveroInvitadoController {
 		}
 	}
 
-	/**
+	/*
 	 * Cierra la aplicación de forma inmediata.
-	 * 
 	 * @return No devuelve un valor útil, ya que la aplicación se cierra antes de
 	 *         ejecutar el retorno.
 	 */
@@ -176,9 +168,8 @@ public class ViveroInvitadoController {
 		return "CrearCliente";
 	}
 
-	/**
+	/*
 	 * Registra una nueva persona en el sistema.
-	 * 
 	 * @param nombre     El nombre de la persona.
 	 * @param email      El correo electrónico de la persona.
 	 * @param usuario    El nombre de usuario de la persona.
@@ -189,106 +180,107 @@ public class ViveroInvitadoController {
 
 	@PostMapping("/CrearCliente")
 	public String registrarPersona(@RequestParam String nombre, @RequestParam String email,
-	        @RequestParam String usuario, @RequestParam String contraseña, @RequestParam String nif,
-	        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaNac, @RequestParam String telefono,
-	        @RequestParam String direccion, Model model) {
-	    try {
-	        // Validación de email existente
-	        if (controlador.getServiciosPersona().emailExistente(email)) {
-	            model.addAttribute("mensajeError", "El email ya está registrado.");
-	            return "CrearCliente";
-	        }
+			@RequestParam String usuario, @RequestParam String contraseña, @RequestParam String nif,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaNac, @RequestParam String telefono,
+			@RequestParam String direccion, Model model) {
 
-	        // Validación de usuario existente o inválido
-	        if (controlador.getServiciosCredencial().usuarioExistente(usuario) || usuario.length() < 3) {
-	            model.addAttribute("mensajeError", "Usuario registrado o no válido.");
-	            return "CrearCliente";
-	        }
+		try {
+			
+			// Validación de email existente
+			if (controlador.getServiciosPersona().emailExistente(email)) {
+				model.addAttribute("mensajeError", "El email ya está registrado.");
+				return "CrearCliente";
+			}
 
-	        // Validación de usuario con espacios
-	        if (usuario.contains(" ")) {
-	            model.addAttribute("mensajeError", "Usuario con espacios.");
-	            return "CrearCliente";
-	        }
+			// Validación de usuario existente o inválido
+			if (controlador.getServiciosCredencial().usuarioExistente(usuario) || usuario.length() < 3) {
+				model.addAttribute("mensajeError", "Usuario registrado o no válido.");
+				return "CrearCliente";
+			}
 
-	        // Validación de contraseña
-	        if (!controlador.getServiciosCredencial().validarPassword(contraseña)) {
-	            model.addAttribute("mensajeError", "La contraseña debe tener entre 6 y 20 caracteres.");
-	            return "CrearCliente";
-	        }
+			// Validación de usuario con espacios
+			if (usuario.contains(" ")) {
+				model.addAttribute("mensajeError", "Usuario con espacios.");
+				return "CrearCliente";
+			}
+			
+			
+			// Validación de contraseña
+			if (!controlador.getServiciosCredencial().validarPassword(contraseña)) {
+				model.addAttribute("mensajeError", "La contraseña debe tener entre 6 y 20 caracteres.");
+				return "CrearCliente";
+			}
 
-	        // Validaciones de los datos del cliente
-	        if (nombre == null || nombre.isEmpty()) {
-	            model.addAttribute("mensajeError", "El nombre no puede estar vacío.");
-	            return "CrearCliente";
-	        }
+			// Validaciones de los datos del cliente
+			if (nombre == null || nombre.isEmpty() || nombre.contains(" ")) {
+				model.addAttribute("mensajeError", "El nombre no puede estar vacío o contener espacios.");
+				return "CrearCliente";
+			}
 
-	        if (email == null || email.isEmpty()) {
-	            model.addAttribute("mensajeError", "El email no puede estar vacío.");
-	            return "CrearCliente";
-	        }
-	        if (email.length() < 5 || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || email.length() > 40) {
-	            model.addAttribute("mensajeError", "Email no válido.");
-	            return "CrearCliente";
-	        }
+			if (email == null || email.isEmpty() || email.length() < 5
+					|| !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || email.length() > 40) {
+				model.addAttribute("mensajeError", "Email no válido.");
+				return "CrearCliente";
+			}
 
-	        if (fechaNac == null) {
-	            model.addAttribute("mensajeError", "La fecha de nacimiento no puede estar vacía.");
-	            return "CrearCliente";
-	        }
+			if (fechaNac == null) {
+				model.addAttribute("mensajeError", "La fecha de nacimiento no puede estar vacía.");
+				return "CrearCliente";
+			}
 
-	        if (nif == null || nif.isEmpty() || !nif.matches("[A-Za-z0-9]+")) {
-	            model.addAttribute("mensajeError", "NIF/NIE no válido.");
-	            return "CrearCliente";
-	        }
+			if (nif == null || nif.isEmpty() || !nif.matches("^[0-9]{8}[A-Za-z]$")) {
+				model.addAttribute("mensajeError", "NIF/NIE no válido.");
+				return "CrearCliente";
+			}
 
-	        if (direccion == null || direccion.isEmpty()) {
-	            model.addAttribute("mensajeError", "La dirección no puede estar vacía.");
-	            return "CrearCliente";
-	        }
+			if (direccion == null || direccion.isEmpty()) {
+				model.addAttribute("mensajeError", "La dirección no puede estar vacía.");
+				return "CrearCliente";
+			}
 
-	        if (telefono == null || telefono.isEmpty() || !telefono.matches("[0-9]{9}")) {
-	            model.addAttribute("mensajeError", "Teléfono no válido.");
-	            return "CrearCliente";
-	        }
+			if (telefono == null || telefono.isEmpty() || !telefono.matches("[0-9]{9}")) {
+				model.addAttribute("mensajeError", "Teléfono no válido.");
+				return "CrearCliente";
+			}
 
-	        Persona persona = new Persona();
-	        persona.setNombre(nombre);
-	        persona.setEmail(email);
+			// Nueva validación para que el cliente no exista ya
+			if (controlador.getServiciosCliente().clienteExistente(nombre, email, nif)) {
+				model.addAttribute("mensajeError", "El nombre, email o NIF ya están registrados.");
+				return "CrearCliente";
+			}
 
-	        Cliente cliente = new Cliente();
-	        cliente.setNombre(nombre);
-	        cliente.setNif(nif);
-	        cliente.setFechanac(fechaNac);
-	        cliente.setDireccion(direccion);
-	        cliente.setTelefono(telefono);
-	        cliente.setEmail(email);
+			// Si pasa todas las validaciones, se crea el cliente
+			Cliente cliente = new Cliente();
+			cliente.setNombre(nombre);
+			cliente.setNif(nif);
+			cliente.setFechanac(fechaNac);
+			cliente.setDireccion(direccion);
+			cliente.setTelefono(telefono);
+			cliente.setEmail(email);
 
-	        controlador.getServiciosCliente().insertar(cliente);
+			controlador.getServiciosCliente().insertar(cliente);
+			
+			Persona persona = new Persona();
+			persona.setNombre(nombre);
+			persona.setEmail(email);
+			
+			Credencial credencial = new Credencial();
+			credencial.setUsuario(usuario);
+			credencial.setPassword(contraseña);
+			credencial.setPersona(persona);
+			persona.setCredencial(credencial);
+			credencial.setRol("CLIENTE");
+			
+			controlador.getServiciosPersona().insertar(persona);
 
-	        Credencial credencial = new Credencial();
-	        credencial.setUsuario(usuario);
-	        credencial.setPassword(contraseña);
-	        credencial.setPersona(persona);
-	        credencial.setRol("CLIENTE");
-	        persona.setCredencial(credencial);
 
-	        if (!controlador.getServiciosPersona().validarPersona(persona)) {
-	            model.addAttribute("mensajeError", "Los datos de la persona no son válidos.");
-	            return "CrearCliente";
-	        }
+			model.addAttribute("mensajeExito", "Usuario registrado correctamente.");
+		} catch (Exception ex) {
+			model.addAttribute("mensajeError", "Error al registrar usuario: " + ex.getMessage());
+		}
 
-	        controlador.getServiciosPersona().insertar(persona);
-
-	        model.addAttribute("mensajeExito", "Usuario registrado correctamente.");
-
-	    } catch (Exception ex) {
-	        model.addAttribute("mensajeError", "Error al registrar usuario: " + ex.getMessage());
-	    }
-
-	    return "CrearCliente";
+		return "CrearCliente";
 	}
-
 
 	@GetMapping("/redirect")
 	public String redirectUser(Authentication authentication) {
@@ -305,10 +297,10 @@ public class ViveroInvitadoController {
 		}
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/403")
-    public String accesoDenegado() {
-        return "403"; 
-    }
+	public String accesoDenegado() {
+		return "403";
+	}
 
 }

@@ -25,20 +25,17 @@
 				<button class="logout-btn">Volver atrás</button>
 			</a>
 		</th:block>
-
-
 	</header>
 
 	<!-- Contenido Principal -->
 	<main>
 		<!-- Formulario para seleccionar el código de la planta -->
 		<form action="/FiltrarEjemplar" method="POST">
-			<input type="hidden" th:name="${_csrf.parameterName}"
-				th:value="${_csrf.token}" /> <label for="codigoPlanta">Código
-				de la Planta:</label> <select id="codigoPlanta" name="codigoPlanta" required>
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+			<label for="codigoPlanta">Código de la Planta:</label> 
+			<select id="codigoPlanta" name="codigoPlanta" required class="scroll-select">
 				<option value="">Seleccione un código de planta</option>
-				<option th:each="planta : ${plantas}" th:value="${planta.codigo}"
-					th:text="${planta.codigo}"></option>
+				<option th:each="planta : ${plantas}" th:value="${planta.codigo}" th:text="${planta.codigo}"></option>
 			</select>
 			<button type="submit">Buscar Ejemplares</button>
 		</form>
@@ -53,10 +50,13 @@
 			<h2>
 				Ejemplares para la planta con código <span th:text="${codigoPlanta}"></span>
 			</h2>
-			<ul>
-				<li th:each="ejemplar : ${ejemplares}"><span
-					th:text="${ejemplar.nombre}"></span></li>
-			</ul>
+			<div class="ejemplares-scroll">
+				<ul>
+					<li th:each="ejemplar : ${ejemplares}">
+						<span th:text="${ejemplar.nombre}"></span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</main>
 </body>

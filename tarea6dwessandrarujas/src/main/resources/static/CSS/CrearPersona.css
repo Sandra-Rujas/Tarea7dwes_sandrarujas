@@ -2,9 +2,9 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
-    min-height: 100vh; /* Permite que crezca si hay más contenido */
+    min-height: 100vh; 
     display: flex;
-    flex-direction: column; /* Asegura que el header y el formulario se organicen bien */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
     background-image: url('../Images/slider02.jpg');
@@ -63,15 +63,15 @@ header h1 {
     background: white;
     max-width: 400px;
     width: 100%;
-    margin-top: 100px; /* Asegura que siempre tenga espacio */
+    margin-top: 100px; 
     padding: 20px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    min-height: 500px; /* Mantiene el tamaño del contenedor estable */
+    min-height: 500px; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra verticalmente los elementos */
+    justify-content: center; 
 }
 
 
@@ -83,7 +83,7 @@ header h1 {
 label {
     display: block;
     font-weight: bold;
-    color: black; /* Verde oscuro */
+    color: black;
     margin-bottom: 5px;
 }
 

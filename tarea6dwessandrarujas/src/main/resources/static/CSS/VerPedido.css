@@ -46,7 +46,7 @@ header h1 {
   font-size: 16px;
   border-radius: 5px;
   border-color: white;
-  text-align: center; /* Alineación de texto en el centro */
+  text-align: center; 
 }
 
 .logout-btn:hover {
@@ -109,14 +109,12 @@ th {
   background-color: darkred;
 }
 
-/* Alinear botones */
 form {
   display: inline-block;
   margin-top: 20px;
-  margin-right: 10px; /* Espaciado entre los botones */
+  margin-right: 10px; 
 }
 
-/* Confirmar compra y cancelar pedido */
 .confirm-container {
   margin-top: 20px;
 }
@@ -127,3 +125,15 @@ form {
   font-weight: bold;
   color: #d3a51a;
 }
+
+.success-message {
+    color: #4CAF50;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    background-color: #e7f7e4;
+}
+

@@ -82,7 +82,7 @@ public class ServiciosCredencial {
         return null;
     }
     
-    /**
+    /*
      * Buscar las credenciales de un usuario por su nombre de usuario.
      * @param usuario El nombre de usuario.
      * @return Las credenciales del usuario o null si no se encuentra.
@@ -91,8 +91,13 @@ public class ServiciosCredencial {
         return credencialRepository.findByUsuario(usuario);
     }
     
+    /*
+     * Obtiene el rol de usuario basado en el nombre de usuario.
+     * @param username Nombre de usuario.
+     * @return Rol del usuario.
+     */
     public String obtenerUserRolePorUsername(String username) {
-        return credencialRepository.findByUsuario(username).getRol(); // O ajusta según tu entidad de usuario
+        return credencialRepository.findByUsuario(username).getRol(); 
     }
 
  

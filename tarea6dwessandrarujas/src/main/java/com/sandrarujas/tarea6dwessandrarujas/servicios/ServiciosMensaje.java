@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.sandrarujas.tarea6dwessandrarujas.modelo.Mensaje;
 import com.sandrarujas.tarea6dwessandrarujas.repositorios.MensajeRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class ServiciosMensaje {
 	
 	@Autowired

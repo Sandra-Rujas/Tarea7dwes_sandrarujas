@@ -59,22 +59,24 @@
 		<!-- Sección 1: Ver todos los mensajes -->
 		<div th:if="${seccion == 'verMensajes'} and ${mensajes != null}">
 			<h3>Todos los mensajes</h3>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Mensaje</th>
-						<th>Fecha</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="mensaje : ${mensajes}">
-						<td th:text="${mensaje.id}"></td>
-						<td th:text="${mensaje.mensaje}"></td>
-						<td th:text="${mensaje.fechaHora}"></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="scroll-container">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Mensaje</th>
+							<th>Fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="mensaje : ${mensajes}">
+							<td th:text="${mensaje.id}"></td>
+							<td th:text="${mensaje.mensaje}"></td>
+							<td th:text="${mensaje.fechaHora}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 		<!-- Sección 2: Ver mensajes por persona -->
@@ -82,7 +84,8 @@
 			<h3>Selecciona una persona</h3>
 			<form action="/MensajesPorPersona" method="POST">
 				<input type="hidden" th:name="${_csrf.parameterName}"
-					th:value="${_csrf.token}" /> <select name="idPersona" required>
+					th:value="${_csrf.token}" /> <select name="idPersona" required
+					size="5" style="max-height: 150px; overflow-y: auto;">
 					<option value="">-- Seleccionar persona --</option>
 					<option th:each="persona : ${personas}" th:value="${persona.id}"
 						th:text="${persona.nombre}"></option>
@@ -92,24 +95,27 @@
 
 			<div th:if="${mensajesPorPersona}">
 				<h3>Mensajes de la Persona Seleccionada</h3>
-				<table>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Mensaje</th>
-							<th>Fecha</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="mensaje : ${mensajesPorPersona}">
-							<td th:text="${mensaje.id}"></td>
-							<td th:text="${mensaje.mensaje}"></td>
-							<td th:text="${mensaje.fechaHora}"></td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="scroll-container">
+					<table>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Mensaje</th>
+								<th>Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="mensaje : ${mensajesPorPersona}">
+								<td th:text="${mensaje.id}"></td>
+								<td th:text="${mensaje.mensaje}"></td>
+								<td th:text="${mensaje.fechaHora}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
+
 
 		<!-- Sección 3: Ver mensajes por fecha -->
 		<div th:if="${seccion == 'mensajesPorFecha'}">
@@ -117,29 +123,31 @@
 			<form action="/MensajesPorFecha" method="POST">
 				<input type="hidden" th:name="${_csrf.parameterName}"
 					th:value="${_csrf.token}" /> <label>Desde:</label> <input
-					type="date" name="fechaInicio" required> <label>Hasta:</label>
-				<input type="date" name="fechaFin" required>
+					type="date" name="fechaInicio" required /> <label>Hasta:</label> <input
+					type="date" name="fechaFin" required />
 				<button type="submit">Buscar</button>
 			</form>
 
 			<div th:if="${mensajesPorFecha}">
 				<h3>Mensajes en el Rango de Fechas</h3>
-				<table>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Mensaje</th>
-							<th>Fecha</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="mensaje : ${mensajesPorFecha}">
-							<td th:text="${mensaje.id}"></td>
-							<td th:text="${mensaje.mensaje}"></td>
-							<td th:text="${mensaje.fechaHora}"></td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="scroll-container">
+					<table>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Mensaje</th>
+								<th>Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="mensaje : ${mensajesPorFecha}">
+								<td th:text="${mensaje.id}"></td>
+								<td th:text="${mensaje.mensaje}"></td>
+								<td th:text="${mensaje.fechaHora}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 
@@ -148,7 +156,8 @@
 			<h3>Selecciona una planta</h3>
 			<form action="/MensajesPorPlanta" method="POST">
 				<input type="hidden" th:name="${_csrf.parameterName}"
-					th:value="${_csrf.token}" /> <select name="codigoPlanta" required size="3">
+					th:value="${_csrf.token}" /> <select name="codigoPlanta" required
+					size="3">
 					<option th:each="planta : ${plantas}" th:value="${planta.codigo}"
 						th:text="${planta.codigo}"></option>
 				</select>
@@ -157,17 +166,24 @@
 
 			<div th:if="${mensajesPorPlanta}">
 				<h3>Mensajes de la Planta Seleccionada</h3>
-				<table>
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Mensaje</th>
-							<th>Fecha</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="mensaje : ${mensajesPorPlanta}">
-							<td th:text="${mensaje.id}"></td>
-							<td th:text="${mensaje.mensaje}"></td>
-							<td th:text="${mensaje.fechaHora}"></td>
-						</tr>
+				<div class="scroll-container">
+					<table>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Mensaje</th>
+								<th>Fecha</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="mensaje : ${mensajesPorPlanta}">
+								<td th:text="${mensaje.id}"></td>
+								<td th:text="${mensaje.mensaje}"></td>
+								<td th:text="${mensaje.fechaHora}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>

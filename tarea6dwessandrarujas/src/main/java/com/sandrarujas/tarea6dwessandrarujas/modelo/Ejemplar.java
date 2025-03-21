@@ -1,11 +1,9 @@
 package com.sandrarujas.tarea6dwessandrarujas.modelo;
 
-
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,7 +20,7 @@ import jakarta.persistence.Table;
 @Table(name = "ejemplares")
 public class Ejemplar implements Serializable {
 
-	//Atributos
+	// Atributos
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,20 +30,22 @@ public class Ejemplar implements Serializable {
 	@Column(nullable = false)
 	private String nombre;
 
+	@Column(nullable = false)
+	private boolean disponible;
+
 	@ManyToOne
 	@JoinColumn(name = "idplanta")
 	private Planta planta;
 
 	@OneToMany(mappedBy = "ejemplar", cascade = CascadeType.ALL)
 	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
-	
-    @ManyToOne
-    @JoinColumn(name = "id_pedido", nullable = true)  
-    private Pedido pedido;
 
-	
-	//Constructores
-	
+	@ManyToOne
+	@JoinColumn(name = "id_pedido", nullable = true)
+	private Pedido pedido;
+
+	// Constructores
+
 	public Ejemplar() {
 
 	}
@@ -53,11 +53,11 @@ public class Ejemplar implements Serializable {
 	public Ejemplar(String nombre, Planta planta) {
 		this.nombre = nombre;
 		this.planta = planta;
+		this.disponible = true;
 	}
 
-	
-	//Getters y Setters
-	
+	// Getters y Setters
+
 	public Long getId() {
 		return id;
 	}
@@ -92,8 +92,7 @@ public class Ejemplar implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	} 
-	
+	}
 
 	public Pedido getPedido() {
 		return pedido;
@@ -103,9 +102,15 @@ public class Ejemplar implements Serializable {
 		this.pedido = pedido;
 	}
 
-	
-	 //Métodos Equals y HashCode
-	
+	public boolean isDisponible() {
+		return disponible;
+	}
+
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
+
+	// Métodos Equals y HashCode
 
 	@Override
 	public int hashCode() {
@@ -124,8 +129,8 @@ public class Ejemplar implements Serializable {
 		return Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
 				&& Objects.equals(planta, other.planta);
 	}
-	
-	//Método toString
+
+	// Método toString
 
 	@Override
 	public String toString() {

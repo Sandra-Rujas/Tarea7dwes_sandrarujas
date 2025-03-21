@@ -34,9 +34,8 @@ public class ViveroPersonalController {
 	@Autowired
 	Controlador controlador;
 
-	/**
+	/*
 	 * Muestra la página de bienvenida del vivero personal.
-	 * 
 	 * @param nombre El nombre que se mostrará en la página, por defecto es "Mundo".
 	 * @param model  El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista de bienvenida.
@@ -49,9 +48,8 @@ public class ViveroPersonalController {
 		return "ViveroPersonal";
 	}
 
-	/**
+	/*
 	 * Realiza el cierre de sesión y redirige a la página de inicio.
-	 * 
 	 * @return La redirección a la página principal.
 	 */
 
@@ -64,9 +62,8 @@ public class ViveroPersonalController {
 
 	// GESTION EJEMPLARES
 
-	/**
+	/*
 	 * Muestra el formulario para filtrar ejemplares por código de planta.
-	 * 
 	 * @param model   El objeto Model para pasar datos a la vista.
 	 * @param session La sesión HTTP para obtener información del usuario.
 	 * @return El nombre de la vista para filtrar ejemplares.
@@ -92,11 +89,9 @@ public class ViveroPersonalController {
 
 		System.out.println("Usuario autenticado desde SecurityContext: " + username);
 
-		// Buscar userId y role en la base de datos usando el username
 		Integer userId = controlador.getServiciosCredencial().obtenerUserIdPorUsername(username);
 		String userRole = controlador.getServiciosCredencial().obtenerUserRolePorUsername(username);
 
-		// Guardar en sesión
 		session.setAttribute("userId", userId);
 		session.setAttribute("userRole", userRole);
 
@@ -109,9 +104,8 @@ public class ViveroPersonalController {
 
 	// GESTION EJEMPLARES
 
-	/**
+	/*
 	 * Muestra el formulario para crear un nuevo ejemplar.
-	 * 
 	 * @param session La sesión HTTP para obtener la información del usuario.
 	 * @param model   El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista para crear un ejemplar.
@@ -137,11 +131,9 @@ public class ViveroPersonalController {
 
 		System.out.println("Usuario autenticado desde SecurityContext: " + username);
 
-		// Buscar userId y role en la base de datos usando el username
 		Integer userId = controlador.getServiciosCredencial().obtenerUserIdPorUsername(username);
 		String userRole = controlador.getServiciosCredencial().obtenerUserRolePorUsername(username);
 
-		// Guardar en sesión
 		session.setAttribute("userId", userId);
 		session.setAttribute("userRole", userRole);
 
@@ -158,9 +150,8 @@ public class ViveroPersonalController {
 		return "CrearEjemplar";
 	}
 
-	/**
+	/*
 	 * Procesa la creación de un nuevo ejemplar.
-	 * 
 	 * @param codigoPlanta El código de la planta seleccionada.
 	 * @param model        El objeto Model para pasar datos a la vista.
 	 * @param session      La sesión HTTP que contiene la información del usuario
@@ -176,18 +167,16 @@ public class ViveroPersonalController {
 		boolean correcto = false;
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String usuarioAutenticado = authentication.getName();
+		String usuarioAutenticado = authentication.getName();
 
 		if (plantasSeleccionadas == null || plantasSeleccionadas.isEmpty()) {
 			model.addAttribute("mensaje", "Debes seleccionar al menos una planta.");
 			return "CrearEjemplar";
 		}
 
-		// Recargar las plantas para poder seguir utilizando el formulario
 		List<Planta> plantas = controlador.getServiciosPlanta().verPlantas();
 		model.addAttribute("plantas", plantas);
 
-		// Iterar sobre cada planta seleccionada
 		for (String codigoPlanta : plantasSeleccionadas) {
 			boolean plantaExiste = controlador.getServiciosPlanta().codigoExistente(codigoPlanta);
 			if (!plantaExiste) {
@@ -198,7 +187,8 @@ public class ViveroPersonalController {
 			Planta planta = controlador.getServiciosPlanta().buscarPorCodigo(codigoPlanta);
 			Ejemplar ejemplar = new Ejemplar();
 			ejemplar.setPlanta(planta);
-			ejemplar.setNombre(codigoPlanta); 
+			ejemplar.setNombre(codigoPlanta);
+			ejemplar.setDisponible(true);
 
 			int numeroDeEjemplares = controlador.getServiciosEjemplar().contarEjemplaresPorPlanta(codigoPlanta);
 
@@ -229,10 +219,9 @@ public class ViveroPersonalController {
 		return "CrearEjemplar";
 	}
 
-	/**
+	/*
 	 * Procesa el formulario para filtrar ejemplares de acuerdo al código de la
 	 * planta.
-	 * 
 	 * @param codigoPlanta El código de la planta para filtrar los ejemplares.
 	 * @param model        El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista con los ejemplares filtrados.
@@ -240,7 +229,7 @@ public class ViveroPersonalController {
 	@PostMapping("/FiltrarEjemplar")
 	public String verEjemplares(@RequestParam("codigoPlanta") String codigoPlanta, Model model) {
 		List<Planta> plantas = controlador.getServiciosPlanta().verPlantas();
-		model.addAttribute("plantas", plantas); 
+		model.addAttribute("plantas", plantas);
 		boolean existe = controlador.getServiciosPlanta().codigoExistente(codigoPlanta);
 		if (!existe) {
 			model.addAttribute("mensaje", "No se encontró ninguna planta con el código: " + codigoPlanta);
@@ -258,9 +247,8 @@ public class ViveroPersonalController {
 		return "FiltrarEjemplar";
 	}
 
-	/**
+	/*
 	 * Muestra la selección de ejemplares para ver los mensajes asociados.
-	 * 
 	 * @param model El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista para ver los ejemplares.
 	 */
@@ -271,7 +259,7 @@ public class ViveroPersonalController {
 
 		if (authentication == null || !authentication.isAuthenticated()) {
 			System.out.println("No hay usuario autenticado en el contexto de seguridad.");
-			return "redirect:/login"; 
+			return "redirect:/login";
 		}
 
 		Object principal = authentication.getPrincipal();
@@ -299,9 +287,8 @@ public class ViveroPersonalController {
 		return "VerMensajesEjemplar";
 	}
 
-	/**
+	/*
 	 * Muestra los mensajes asociados a un ejemplar seleccionado.
-	 * 
 	 * @param idEjemplar El ID del ejemplar seleccionado.
 	 * @param model      El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista con los mensajes del ejemplar.
@@ -323,9 +310,8 @@ public class ViveroPersonalController {
 
 	// GESTION MENSAJES
 
-	/**
+	/*
 	 * Muestra el menú de gestión de mensajes.
-	 * 
 	 * @param seccion La sección seleccionada (opcional).
 	 * @param model   El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista para ver los mensajes.
@@ -348,7 +334,7 @@ public class ViveroPersonalController {
 
 		if (authentication == null || !authentication.isAuthenticated()) {
 			System.out.println("No hay usuario autenticado en el contexto de seguridad.");
-			return "redirect:/login"; 
+			return "redirect:/login";
 		}
 
 		Object principal = authentication.getPrincipal();
@@ -365,7 +351,6 @@ public class ViveroPersonalController {
 		Integer userId = controlador.getServiciosCredencial().obtenerUserIdPorUsername(username);
 		String userRole = controlador.getServiciosCredencial().obtenerUserRolePorUsername(username);
 
-		// Guardar en sesión
 		session.setAttribute("userId", userId);
 		session.setAttribute("userRole", userRole);
 
@@ -374,9 +359,8 @@ public class ViveroPersonalController {
 		return "VerMensajes";
 	}
 
-	/**
+	/*
 	 * Filtra los mensajes por persona.
-	 * 
 	 * @param idPersona El ID de la persona para filtrar los mensajes.
 	 * @param model     El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista con los mensajes filtrados por persona.
@@ -391,9 +375,8 @@ public class ViveroPersonalController {
 		return "VerMensajes";
 	}
 
-	/**
+	/*
 	 * Filtra los mensajes por planta.
-	 * 
 	 * @param codigoPlanta El código de la planta para filtrar los mensajes.
 	 * @param model        El objeto Model para pasar datos a la vista.
 	 * @return El nombre de la vista con los mensajes filtrados por planta.
@@ -409,9 +392,8 @@ public class ViveroPersonalController {
 		return "VerMensajes";
 	}
 
-	/**
+	/*
 	 * Filtra los mensajes por fecha.
-	 * 
 	 * @param fechaInicioStr La fecha de inicio para el filtro.
 	 * @param fechaFinStr    La fecha de fin para el filtro.
 	 * @param model          El objeto Model para pasar datos a la vista.
@@ -432,6 +414,61 @@ public class ViveroPersonalController {
 		model.addAttribute("plantas", controlador.getServiciosPlanta().verPlantas());
 
 		return "VerMensajes";
+	}
+
+	
+	/*
+	 * Muestra el stock disponible de plantas para el usuario autenticado.
+	 * Verifica si el usuario está autenticado y obtiene el nombre de usuario y su rol.
+	 * Luego, carga la lista de plantas y su cantidad de ejemplares disponibles en el stock.
+	 * @param model El modelo de la vista que contiene los datos a mostrar.
+	 * @param session La sesión HTTP que almacena información del usuario autenticado.
+	 * @return La vista "Stock" con la información del stock de plantas, o un mensaje de error si ocurre algún problema.
+	 */
+	
+	@GetMapping("/Stock")
+	public String mostrarStock(Model model, HttpSession session) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication == null || !authentication.isAuthenticated()) {
+			System.out.println("No hay usuario autenticado en el contexto de seguridad.");
+			return "redirect:/login";
+		}
+
+		Object principal = authentication.getPrincipal();
+		String username = null;
+
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+
+		System.out.println("Usuario autenticado desde SecurityContext: " + username);
+
+		Integer userId = controlador.getServiciosCredencial().obtenerUserIdPorUsername(username);
+		String userRole = controlador.getServiciosCredencial().obtenerUserRolePorUsername(username);
+
+		session.setAttribute("userId", userId);
+		session.setAttribute("userRole", userRole);
+		try {
+			List<Planta> plantas = controlador.getServiciosPlanta().verPlantas();
+
+			List<String[]> stockPlantas = new ArrayList<>();
+
+			for (Planta planta : plantas) {
+				int cantidadDisponible = controlador.getServiciosEjemplar()
+						.contarEjemplaresDisponibles(planta.getCodigo());
+				stockPlantas.add(new String[] { planta.getCodigo(), String.valueOf(cantidadDisponible) });
+			}
+
+			model.addAttribute("stockPlantas", stockPlantas);
+			return "Stock";
+		} catch (Exception e) {
+			model.addAttribute("mensaje", "Error al cargar el stock: " + e.getMessage());
+			return "Stock";
+		}
 	}
 
 }

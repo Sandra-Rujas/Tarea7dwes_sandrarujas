@@ -1,0 +1,140 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	    background-image: url('../Images/slider01.jpg');
+	
+}
+
+/* Estilos para el encabezado */
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: black;
+	color: white;
+	padding: 10px 20px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	height: 70px;
+	box-sizing: border-box;
+}
+
+/* Logo dentro del encabezado */
+header .logo img {
+	width: 50px;
+	height: auto;
+	margin-right: 15px;
+}
+
+/* Título centrado en el encabezado */
+header h1 {
+	flex-grow: 1;
+	font-size: 24px;
+	text-align: center;
+	margin: 0;
+}
+
+/* Estilo general para los botones de navegación */
+button.logout-btn {
+	background-color: #ff6347;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/* Hover en los botones de navegación */
+button.logout-btn:hover {
+	background-color: #e53e2f;
+}
+
+/* Ajustes para el contenedor principal de la lista de stock */
+.stock-list {
+	margin: 100px 20px 20px 20px; 
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+/* Estilos para la tabla */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0;
+}
+
+/* Estilos para las celdas de la tabla */
+th, td {
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+
+/* Estilos para los encabezados de la tabla */
+th {
+	background-color: black;
+	color: white;
+}
+
+/* Estilos para las filas de la tabla */
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+tr:hover {
+	background-color: #ddd;
+}
+
+/* Estilo para los mensajes de error */
+.mensaje-error {
+	color: red;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 20px;
+}
+
+/* Barra lateral con scroll en la tabla */
+.scrollable-table {
+	overflow-x: auto; 
+	overflow-y: auto; 
+	max-height: 200px; 
+	border: 1px solid #ddd;
+	border-radius: 8px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media ( max-width : 600px) {
+	header h1 {
+		font-size: 20px;
+	}
+
+	/* Ajuste en el tamaño de la tabla para pantallas pequeñas */
+	table {
+		font-size: 14px;
+	}
+
+	/* Ajuste en el tamaño de los botones */
+	button.logout-btn {
+		padding: 8px 15px;
+	}
+
+	/* Estilo adicional para los contenedores con scroll en pantallas pequeñas */
+	.scrollable-table {
+		max-height: 300px;
+		
+	}
+}
+
+/* Asegura que el contenedor con el scroll se vea bien al pasar el mouse */
+.scrollable-table:hover {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

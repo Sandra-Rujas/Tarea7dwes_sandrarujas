@@ -28,8 +28,6 @@ public class Controlador {
 	@Autowired
 	ServiciosPedido serviciosPedido;
 	
-	@Autowired
-	ServiciosCarrito serviciosCarrito;
 
 	private String usuarioConectado;
 
@@ -77,9 +75,5 @@ public class Controlador {
 		return serviciosPedido;
 	}
 	
-
-	public ServiciosCarrito getServiciosCarrito() {
-		return serviciosCarrito;
-	}
 
 }

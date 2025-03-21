@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vivero</title>
-    <link rel="stylesheet" th:href="@{../CSS/VerPlantas.css}">
+    <title>Stock de Ejemplares</title>
+    <link rel="stylesheet" th:href="@{/CSS/Stock.css}">
 </head>
 <body>
 
     <!-- Header -->
     <header>
         <div class="logo">
-            <img th:src="@{../Images/logosinfondo.png}" alt="Logo">
+            <img th:src="@{/Images/logosinfondo.png}" alt="Logo">
         </div>
-        <h1>¡LISTADO DE PLANTAS!</h1>
+        <h1>STOCK DE EJEMPLARES</h1>
         <th:block th:if="${session.userRole == 'ADMIN'}">
             <a th:href="@{/ViveroAdmin}"><button class="logout-btn">Volver atrás</button></a>
         </th:block>
@@ -27,27 +27,26 @@
         </th:block>
     </header>
 
-    <!-- Contenido principal. Listado de plantas -->
-    <div class="plant-list">
-        <!-- Contenedor para habilitar el scroll -->
-        <div class="table-scroll">
+    <!-- Contenido principal: tabla de stock con barra lateral -->
+    <div class="stock-list">
+        <!-- Contenedor con scroll horizontal o vertical -->
+        <div class="scrollable-table">
             <table>
                 <thead>
                     <tr>
-                        <th>Código</th>
-                        <th>Nombre Común</th>
-                        <th>Nombre Científico</th>
+                        <th>Código de Planta</th>
+                        <th>Cantidad Disponible de Ejemplares</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="planta : ${plantas}">
-                        <td th:text="${planta.codigo}">Código</td>
-                        <td th:text="${planta.nombreComun}">Nombre Común</td>
-                        <td th:text="${planta.nombreCientifico}">Nombre Científico</td>
+                    <tr th:each="stock : ${stockPlantas}">
+                        <td th:text="${stock[0]}">Código Planta</td>
+                        <td th:text="${stock[1]}">Cantidad</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
 </body>
 </html>

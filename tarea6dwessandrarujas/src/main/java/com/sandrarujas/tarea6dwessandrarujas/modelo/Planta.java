@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,8 +20,7 @@ import jakarta.persistence.Table;
 @Table(name = "plantas")
 public class Planta implements Serializable {
 
-	
-	//Atributos
+	// Atributos
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,8 +39,8 @@ public class Planta implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idplanta")
 	private List<Ejemplar> ejemplares = new LinkedList<Ejemplar>();
-	
-	//Constructores
+
+	// Constructores
 
 	public Planta() {
 
@@ -54,9 +52,8 @@ public class Planta implements Serializable {
 		this.nombreCientifico = nombreCientifico;
 	}
 
-	
-	//Getters y Setters
-	
+	// Getters y Setters
+
 	public Long getId() {
 		return id;
 	}
@@ -97,9 +94,8 @@ public class Planta implements Serializable {
 		this.ejemplares = ejemplares;
 	}
 
-	
-	//Métodos Equals y HashCode
-	
+	// Métodos Equals y HashCode
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, nombreComun, nombreCientifico);
@@ -118,16 +114,12 @@ public class Planta implements Serializable {
 				&& Objects.equals(nombreCientifico, other.nombreCientifico);
 	}
 
-	
+	// Método toString
 
-	//Método toString
-	
 	@Override
 	public String toString() {
 		return "Planta id:" + id + ", codigo:" + codigo + ", Nombre común:" + nombreComun + ", Nombre Cientifico:"
 				+ nombreCientifico;
 	}
 
-	
-	
 }

@@ -45,8 +45,8 @@ header h1 {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-align: center;  /* Centrado para el título */
-    flex-grow: 1;  /* Asegura que el título esté centrado en el espacio disponible */
+    text-align: center;  
+    flex-grow: 1;  
 }
 
 /* Botón de "Volver atrás" */
@@ -69,15 +69,23 @@ header h1 {
     padding: 25px;
     width: 90%;
     max-width: 1000px;
-    margin-top: 120px;  /* Espacio suficiente después del header */
+    margin-top: 120px;  
     text-align: center;
+}
+
+/* Contenedor de la tabla con scroll */
+.table-scroll {
+    max-height: 300px; 
+    overflow-y: auto; 
+    margin-top: 30px;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
 }
 
 table {
     width: 100%;
-    margin-top: 30px;
+    border-collapse: collapse;  
     background-color: white;
-    border-collapse: collapse;  /* Mejor manejo de bordes */
 }
 
 th, td {
@@ -102,19 +110,18 @@ tr:hover td {
     color: white;
 }
 
-/* Responsividad: Adaptar elementos para pantallas más pequeñas */
 @media (max-width: 768px) {
     header {
         padding: 10px 15px;
     }
 
     header h1 {
-        font-size: 20px;  /* Reducir tamaño del título */
+        font-size: 20px; 
     }
 
     .logout-btn {
         font-size: 14px;
-        padding: 8px 16px;  /* Ajustar tamaño del botón */
+        padding: 8px 16px; 
     }
 
     .plant-list {
@@ -122,11 +129,11 @@ tr:hover td {
     }
 
     table th, table td {
-        font-size: 14px;  /* Reducir tamaño de las celdas */
-        padding: 10px;    /* Reducir el padding */
+        font-size: 14px;  
+        padding: 10px;    
     }
 
     table {
-        margin-top: 20px; /* Menor margen superior */
+        margin-top: 20px; 
     }
 }

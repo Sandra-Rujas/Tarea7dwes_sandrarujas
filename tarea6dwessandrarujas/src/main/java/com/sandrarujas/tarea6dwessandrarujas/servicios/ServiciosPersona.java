@@ -15,7 +15,6 @@ public class ServiciosPersona {
 
 	/*
 	 * Método insertar persona.
-	 * 
 	 * @param persona. La persona que queremos añadir.
 	 */
 	public void insertar(Persona persona) {
@@ -24,7 +23,6 @@ public class ServiciosPersona {
 
 	/*
 	 * Método que nos permite ver todas las personas.
-	 * 
 	 * @return todas las personas.
 	 */
 	public Collection<Persona> totalPersonas() {
@@ -33,9 +31,7 @@ public class ServiciosPersona {
 
 	/*
 	 * Método que nos permite comprobar si el email existe.
-	 * 
 	 * @param email. El email de la persona.
-	 * 
 	 * @return true si existe el email, false si no.
 	 */
 	public boolean emailExistente(String email) {
@@ -44,9 +40,7 @@ public class ServiciosPersona {
 
 	/*
 	 * Método buscar persona por nombre.
-	 * 
 	 * @param nombre. El nombre de la persona que queremos encontrar.
-	 * 
 	 * @return el nombre ignorando las mayúsculas y minúsculas.
 	 */
 	public Persona buscarPorNombre(String nombre) {
@@ -55,9 +49,7 @@ public class ServiciosPersona {
 
 	/*
 	 * Método validar persona.
-	 * 
 	 * @param persona.La persona que queremos validar.
-	 * 
 	 * @return false si la persona es null. Si el nombre está vacío. Si el email no
 	 * cumple con los requisitos especificados.
 	 */
@@ -76,6 +68,11 @@ public class ServiciosPersona {
 			return false;
 		}
 		return true;
+	}
+	
+	
+	public Persona buscarNombrePorId(Long id) {
+		return personaRepository.findNombreById(id);
 	}
 
 }

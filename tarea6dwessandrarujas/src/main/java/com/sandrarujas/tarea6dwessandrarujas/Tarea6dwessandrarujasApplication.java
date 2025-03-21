@@ -16,7 +16,7 @@ public class Tarea6dwessandrarujasApplication {
     }
 
     
-    /**
+    /*
      * Abre la URL especificada en el navegador predeterminado del sistema operativo.
      * @param url La URL a abrir.
      */

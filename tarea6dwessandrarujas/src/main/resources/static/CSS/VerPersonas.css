@@ -55,10 +55,8 @@ header h1 {
     background-color: #d3a51a;
 }
 
-
-
 .container {
-    margin-top: 250px;
+    margin-top: 200px;
     background: white;
     max-width: 600px;
     width: 90%;
@@ -68,7 +66,7 @@ header h1 {
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     border: 2px solid black;
-    text-align: center; /* Centramos el contenido */
+    text-align: center; 
 }
 
 table {
@@ -123,3 +121,19 @@ button:hover {
     background-color: orange;
     transform: scale(1.05);
 }
+
+/* Contenedor para hacer scroll en la tabla */
+.table-scroll {
+    max-height: 300px; 
+    overflow-y: auto; 
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Estilos para los elementos dentro de la tabla con desplazamiento */
+.table-scroll table {
+    width: 100%; 
+    table-layout: fixed; 
+}
+

@@ -7,6 +7,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,8 +26,7 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	
+
 	@Column(nullable = false)
 	private int cantidad;
 
@@ -40,21 +40,19 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "planta_id", nullable = false)
 	private Planta planta;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id", nullable = false)
+	private Cliente cliente;
+
 	// Constructores
 
 	public Pedido() {
-		// TODO Auto-generated constructor stub
-	} 
-	
-	
+	}
 
 	public Pedido(int cantidad, Planta planta) {
 		this.cantidad = cantidad;
 		this.planta = planta;
 	}
-
-
-
 
 	public Pedido(Date fecha) {
 		this.fecha = fecha;
@@ -96,18 +94,26 @@ public class Pedido implements Serializable {
 	public void setPlanta(Planta planta) {
 		this.planta = planta;
 	}
-	
-	public int getCantidad() {
-        return cantidad;
-    }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-    
-    @Override
-    public String toString() {
-        return "Pedido{id=" + id + ", cantidad=" + cantidad + ", fecha=" + fecha + "}";
-    }
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@Override
+	public String toString() {
+		return "Pedido{id=" + id + ", cantidad=" + cantidad + ", fecha=" + fecha + "}";
+	}
 
 }

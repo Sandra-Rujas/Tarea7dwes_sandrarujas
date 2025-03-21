@@ -12,7 +12,7 @@ import com.sandrarujas.tarea6dwessandrarujas.modelo.Mensaje;
 @Repository
 public interface MensajeRepository extends JpaRepository <Mensaje, Long>{
 	
-	/*Método que nos permite a través de una consulta buscar un mensaje según dos rangos de fecha*/
+	/*Método que nos permite a través de una consulta buscar un mensaje según dos rangos de fecha distintos*/
     @Query("SELECT m FROM Mensaje m WHERE DATE(m.fechaHora) BETWEEN :primeraFecha AND :segundaFecha")
     ArrayList<Mensaje> buscarMensajePorFecha(@Param("primeraFecha") LocalDate primeraFecha,@Param("segundaFecha") LocalDate segundaFecha);
 

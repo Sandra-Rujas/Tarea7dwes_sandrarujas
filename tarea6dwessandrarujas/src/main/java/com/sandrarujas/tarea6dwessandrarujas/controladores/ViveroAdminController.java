@@ -29,9 +29,8 @@ public class ViveroAdminController {
 	@Autowired
 	Controlador controlador;
 
-	/**
+	/*
 	 * Muestra el menú principal de administración.
-	 * 
 	 * @param model El modelo para la vista.
 	 * @return El nombre de la vista a mostrar.
 	 */
@@ -42,9 +41,8 @@ public class ViveroAdminController {
 	}
 
 	// GESTIÓN PERSONAS
-	/**
+	/*
 	 * Muestra el formulario para crear una nueva persona.
-	 * 
 	 * @param model El modelo para la vista.
 	 * @return El nombre de la vista para crear una persona.
 	 */
@@ -54,9 +52,8 @@ public class ViveroAdminController {
 		return "CrearPersona";
 	}
 
-	/**
+	/*
 	 * Registra una nueva persona en el sistema.
-	 * 
 	 * @param nombre     El nombre de la persona.
 	 * @param email      El correo electrónico de la persona.
 	 * @param usuario    El nombre de usuario de la persona.
@@ -130,9 +127,8 @@ public class ViveroAdminController {
 		return "CrearPersona";
 	}
 
-	/**
+	/*
 	 * Muestra todas las personas registradas.
-	 * 
 	 * @param model El modelo para la vista.
 	 * @return El nombre de la vista con las personas.
 	 */
@@ -157,9 +153,8 @@ public class ViveroAdminController {
 
 	// GESTIÓN PLANTAS
 
-	/**
+	/*
 	 * Muestra el formulario para crear una nueva planta.
-	 * 
 	 * @return El nombre de la vista para crear una planta.
 	 */
 
@@ -168,9 +163,8 @@ public class ViveroAdminController {
 		return "CrearPlanta";
 	}
 
-	/**
+	/*
 	 * Registra una nueva planta en el sistema.
-	 * 
 	 * @param codigo           El código de la planta.
 	 * @param nombreComun      El nombre común de la planta.
 	 * @param nombreCientifico El nombre científico de la planta.
@@ -221,9 +215,8 @@ public class ViveroAdminController {
 		}
 	}
 
-	/**
+	/*
 	 * Muestra el formulario para modificar una planta.
-	 * 
 	 * @param model  El modelo para la vista.
 	 * @param opcion La opción seleccionada para modificar.
 	 * @return El nombre de la vista para modificar la planta.
@@ -233,7 +226,6 @@ public class ViveroAdminController {
 			@RequestParam(name = "codigo", required = false) String codigo,
 			@RequestParam(name = "opcion", required = false) Integer opcion) {
 
-		// Obtener todas las plantas y agregarlas al modelo
 		List<Planta> plantas = controlador.getServiciosPlanta().verPlantas();
 		model.addAttribute("plantas", plantas);
 
@@ -244,6 +236,16 @@ public class ViveroAdminController {
 
 		return "ModificarPlanta";
 	}
+
+	/*
+	 * Método para actualizar los datos de una planta según la opción seleccionada.
+	 * @param codigo           Código de la planta a modificar.
+	 * @param nombreComun      Nuevo nombre común de la planta (opcional).
+	 * @param nombreCientifico Nuevo nombre científico de la planta (opcional).
+	 * @param opcion           Opción de actualización (1 para nombre común, 2 para nombre científico).
+	 * @param model            Modelo de Spring para pasar atributos a la vista.
+	 * @return Redirección a la página de modificación de plantas.
+	 */
 
 	@PostMapping("/ModificarPlanta")
 	public String actualizarPlanta(@RequestParam("codigo") String codigo,
@@ -289,9 +291,8 @@ public class ViveroAdminController {
 	}
 
 	// GESTIÓN MENSAJES
-	/**
+	/*
 	 * Muestra el formulario para crear un nuevo mensaje.
-	 * 
 	 * @param model El modelo para la vista.
 	 * @return El nombre de la vista para crear un mensaje.
 	 */
@@ -312,15 +313,12 @@ public class ViveroAdminController {
 			username = principal.toString();
 		}
 
-		// Buscar userId y role en la base de datos usando el username
 		Integer userId = controlador.getServiciosCredencial().obtenerUserIdPorUsername(username);
 		String userRole = controlador.getServiciosCredencial().obtenerUserRolePorUsername(username);
 
-		// Guardar en sesión
 		session.setAttribute("userId", userId);
 		session.setAttribute("userRole", userRole);
 
-		// Obtener ejemplares
 		List<Ejemplar> ejemplares = (List<Ejemplar>) controlador.getServiciosEjemplar().verEjemplares();
 		if (ejemplares == null || ejemplares.isEmpty()) {
 			model.addAttribute("mensajeError", "No hay ejemplares disponibles.");
@@ -331,6 +329,13 @@ public class ViveroAdminController {
 		return "CrearMensaje";
 	}
 
+	/*
+	 * Selecciona un ejemplar por su ID y lo agrega al modelo para su uso en la vista.
+	 * @param idEjemplar ID del ejemplar a seleccionar.
+	 * @param model      Modelo de Spring para pasar atributos a la vista.
+	 * @param session    Sesión HTTP para manejar datos del usuario.
+	 * @return Nombre de la vista "CrearMensaje".
+	 */
 	@PostMapping("/SeleccionarEjemplar")
 	public String seleccionarEjemplar(@RequestParam Long idEjemplar, Model model, HttpSession session) {
 		Ejemplar ejemplar = controlador.getServiciosEjemplar().buscarPorID(idEjemplar);
@@ -346,6 +351,14 @@ public class ViveroAdminController {
 		return "CrearMensaje";
 	}
 
+	/*
+	 * Crea un nuevo mensaje asociado a un ejemplar, validando la autenticación del usuario.
+	 * @param idEjemplar  ID del ejemplar al que se asociará el mensaje.
+	 * @param mensajeTexto Contenido del mensaje a crear.
+	 * @param model       Modelo de Spring para pasar atributos a la vista.
+	 * @param session     Sesión HTTP para manejar datos del usuario.
+	 * @return Nombre de la vista "CrearMensaje".
+	 */
 	@PostMapping("/CrearMensaje")
 	public String crearMensaje(@RequestParam Long idEjemplar, @RequestParam String mensajeTexto, Model model,
 			HttpSession session) {

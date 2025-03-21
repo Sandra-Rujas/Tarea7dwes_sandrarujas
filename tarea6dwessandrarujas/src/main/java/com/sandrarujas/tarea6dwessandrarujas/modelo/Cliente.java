@@ -1,6 +1,5 @@
 package com.sandrarujas.tarea6dwessandrarujas.modelo;
 
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,21 +34,24 @@ public class Cliente implements Serializable {
 
 	@Column(length = 500, nullable = false)
 	private String direccion;
-	
+
 	@Column(length = 50, nullable = false)
 	private String email;
 
 	@Column(length = 15, nullable = false)
 	private String telefono;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "credencial_id", nullable = false) 
+	private Credencial credencial;
+
 	// Constructores
-	
+
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Long id, String nombre, Date fechanac, String nif, String direccion, String email,
-			String telefono) {
+	public Cliente(Long id, String nombre, Date fechanac, String nif, String direccion, String email, String telefono) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -57,8 +61,7 @@ public class Cliente implements Serializable {
 		this.email = email;
 		this.telefono = telefono;
 	}
-	
-	
+
 	// Getter y Setter
 
 	public Long getId() {
@@ -117,10 +120,24 @@ public class Cliente implements Serializable {
 		this.telefono = telefono;
 	}
 
+	public Credencial getCredencial() {
+		return credencial;
+	}
+
+	public void setCredencial(Credencial credencial) {
+		this.credencial = credencial;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+
+	// Método ToString
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", fechanac=" + fechanac + ", nif=" + nif + ", direccion="
+				+ direccion + ", email=" + email + ", telefono=" + telefono + "]";
+	}
 
 }

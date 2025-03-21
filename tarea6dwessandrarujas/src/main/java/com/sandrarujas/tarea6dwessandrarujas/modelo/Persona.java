@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,118 +16,111 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="personas")
-public class Persona implements Serializable{
+@Table(name = "personas")
+public class Persona implements Serializable {
 
-		//Atributos
-        private static final long serialVersionUID = 1L;
+	// Atributos
+	private static final long serialVersionUID = 1L;
 
-        @Id
-        @GeneratedValue(strategy=GenerationType.IDENTITY)
-        private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-        @Column(nullable= false)
-        private String nombre;
+	@Column(nullable = false)
+	private String nombre;
 
-        @Column(unique=true, nullable = false)
-        private String email;
-        
+	@Column(unique = true, nullable = false)
+	private String email;
 
-        @OneToOne(mappedBy= "persona", cascade= CascadeType.ALL)
-        private Credencial credencial;
+	@OneToOne(mappedBy = "persona", cascade = CascadeType.ALL)
+	private Credencial credencial;
 
-        @OneToMany(mappedBy = "persona")
-        private List<Mensaje> mensajes = new LinkedList<Mensaje>();
-        
-      //Constructores
+	@OneToMany(mappedBy = "persona")
+	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
 
-        public Persona() {
-        }
+	// Constructores
 
-        public Persona(String nombre, String email) {
-                this.nombre = nombre;
-                this.email = email;
-        }
-        
-        public Persona(String nombre, String email, String rol) {
-            this.nombre = nombre;
-            this.email = email;
-       
-        }
+	public Persona() {
+	}
 
-        
-      //Getters y Setters
-        
-        public Long getId() {
-                return id;
-        }
+	public Persona(String nombre, String email) {
+		this.nombre = nombre;
+		this.email = email;
+	}
 
-        public void setId(Long id) {
-                this.id = id;
-        }
+	public Persona(String nombre, String email, String rol) {
+		this.nombre = nombre;
+		this.email = email;
 
-        public String getNombre() {
-                return nombre;
-        }
+	}
 
-        public void setNombre(String nombre) {
-                this.nombre = nombre;
-        }
+	// Getters y Setters
 
-        public String getEmail() {
-                return email;
-        }
+	public Long getId() {
+		return id;
+	}
 
-        public void setEmail(String email) {
-                this.email = email;
-        }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-        public Credencial getCredenciales() {
-                return credencial;
-        }
+	public String getNombre() {
+		return nombre;
+	}
 
-        public void setCredencial(Credencial credencial) {
-                this.credencial = credencial;
-        }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
+	public String getEmail() {
+		return email;
+	}
 
-        public List<Mensaje> getMensajes() {
-                return mensajes;
-        }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-        public void setMensajes(List<Mensaje> mensajes) {
-                this.mensajes = mensajes;
-        }
-        
+	public Credencial getCredenciales() {
+		return credencial;
+	}
 
-        
-        //Métodos Equals y HashCode
-        
-        @Override
-        public int hashCode() {
-                return Objects.hash(credencial, email, id, nombre);
-        }
+	public void setCredencial(Credencial credencial) {
+		this.credencial = credencial;
+	}
 
-        @Override
-        public boolean equals(Object obj) {
-                if (this == obj)
-                        return true;
-                if (obj == null)
-                        return false;
-                if (getClass() != obj.getClass())
-                        return false;
-                Persona other = (Persona) obj;
-                return Objects.equals(credencial, other.credencial) && Objects.equals(email, other.email)
-                                && Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
-        }
+	public List<Mensaje> getMensajes() {
+		return mensajes;
+	}
 
-        //Método toString
-        
-        @Override
-        public String toString() {
-                return "Persona ID:" + id + ", Nombre:" + nombre + ", Email:" + email + ", Credenciales:" + credencial;
-        }
+	public void setMensajes(List<Mensaje> mensajes) {
+		this.mensajes = mensajes;
+	}
 
+	// Métodos Equals y HashCode
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(credencial, email, id, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(credencial, other.credencial) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
+	}
+
+	// Método toString
+
+	@Override
+	public String toString() {
+		return "Persona ID:" + id + ", Nombre:" + nombre + ", Email:" + email + ", Credenciales:" + credencial;
+	}
 
 }

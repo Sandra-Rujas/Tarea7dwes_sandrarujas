@@ -10,11 +10,11 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
 	boolean existsByEmail(String email);
 
-	/*
-	 * Método que nos permite buscar el nombre ignorando las letras mayúsculas o
-	 * minúsculas
-	 */
+	/* Método que nos permite buscar el nombre ignorando las letras mayúsculas o minúsculas*/
 	Persona findByNombreContainingIgnoreCase(String nombre);
+	
+	 @Query("SELECT p FROM Persona p WHERE p.id = :id")
+	    Persona findNombreById(@Param("id") Long id);
 
 
 }
